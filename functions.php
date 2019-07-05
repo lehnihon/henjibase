@@ -26,7 +26,6 @@ function site_scripts() {
 	wp_enqueue_style( 'site-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'site-script-jquery', get_template_directory_uri() ."/assets/js/jquery-3.1.1.min.js");
-	wp_enqueue_script( 'site-script-popper', "https://unpkg.com/popper.js/dist/umd/popper.min.js");
   wp_enqueue_script( 'site-script-bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.min.js');
   wp_enqueue_script( 'site-script-mask', get_template_directory_uri() . '/assets/js/jquery.mask.min.js');
   wp_enqueue_script( 'site-script-fontawesome', "https://kit.fontawesome.com/3bccf4d453.js");

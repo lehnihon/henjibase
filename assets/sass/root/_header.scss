@@ -2,13 +2,31 @@
   background-color:#7d1a1e;
   .menu-principal{
       .nav-link{
-          color:#FFF;
+        color:#FFF;
       }
   }
   .menu-alugue{
-      h3{
-        color:#FFF;
-        font-weight: 500;
-      }
+    color:#FFF;
+    h3{
+      color:#FFF;
+      font-weight: 400;
+    }
+    input{
+      color:#555555;
+    }
+    a{
+      color:#FFF;
+    }
+    .buscar-reserva{
+      background-color:#ffd200;
+      color:#7d1a1e;
+      border:1px solid #ffd200;
+      display: inline-block;
+      padding:8px 20px;
+    }
+    .buscar-reserva:hover{
+      background-color:#7d1a1e;
+      color:#ffd200;
+    }
   }
 }

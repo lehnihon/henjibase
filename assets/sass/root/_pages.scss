@@ -1,3 +1,19 @@
 #page{
-    
+    .frota{
+        padding:3rem 0;
+    }
+    img{
+        max-width:100%;
+    }
+    .btn-selecionar{
+    background-color:#ffd200;
+    color:#7d1a1e;
+    border:1px solid #ffd200;
+    display: inline-block;
+    padding:8px 20px;
+    }
+    .btn-selecionar:hover{
+    background-color:#7d1a1e;
+    color:#ffd200;
+    }
 }

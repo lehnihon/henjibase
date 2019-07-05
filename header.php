@@ -99,12 +99,12 @@
             </div>
           </div>
           <div class="col-12">
-            <a href="#">Nova Reserva</a>
+            <a href="#" class="mr-3">Nova Reserva</a>
             <a href="#">Alterar/Cancelar Reserva</a>
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-3 mb-md-0">
+      <div class="col-md-3 mb-3 mb-md-0">
         <div class="row">
           <div class="col-12 mb-1">
             Selecione o Local de Retirada
@@ -113,11 +113,14 @@
             <div class="input-group">
               <input type="text" class="form-control">
               <div class="input-group-append">
-                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-1">
+        <a class="mt-md-4 mt-0  buscar-reserva" href="#">Procurar</a>
       </div>
     </div>
   </div>
