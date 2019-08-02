@@ -1,11 +1,29 @@
 #header{
   background-color:#7d1a1e;
+  .menu-topo{
+    background-color:#FFF;
+    text-align: right;
+    color:#6f1115;
+    font-size:1.125rem;
+    a{
+      color:#6f1115;
+      padding:0 0.375rem;
+      font-size:1.125rem;
+    }
+    a:hover{
+      color:#ffd200;
+    }
+  }
   .menu-principal{
       .nav-link{
         color:#FFF;
       }
+      a:hover{
+        color:#ffd200;
+      }
   }
   .menu-alugue{
+    background-color:#6f1115;
     color:#FFF;
     h3{
       color:#FFF;
@@ -27,6 +45,9 @@
     .buscar-reserva:hover{
       background-color:#7d1a1e;
       color:#ffd200;
+    }
+    .local-dev{
+      display:none;
     }
   }
 }

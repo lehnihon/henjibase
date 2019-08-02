@@ -1,19 +1,100 @@
 #page{
-    .frota{
+    .titulo-topo{
+        background-color:#7d1a1e;
+        h1{
+            color:#FFF;
+            font-size:1.75rem;
+        }
+        h5{
+            color:#FFF;
+        }
+    }
+    .breadcrumb{
+        background-color:transparent;
+        a{
+            color:#6f1115;
+        }
+    }
+    .page-espaco{
         padding:3rem 0;
     }
     img{
         max-width:100%;
     }
     .btn-selecionar{
-    background-color:#ffd200;
-    color:#7d1a1e;
-    border:1px solid #ffd200;
-    display: inline-block;
-    padding:8px 20px;
+        background-color:#ffd200;
+        color:#7d1a1e;
+        border:1px solid #ffd200;
+        display: inline-block;
+        padding:8px 20px;
     }
     .btn-selecionar:hover{
-    background-color:#7d1a1e;
-    color:#ffd200;
+        background-color:#7d1a1e;
+        color:#ffd200;
+    }
+
+    .redes{
+        color:#6f1115;
+        font-size:1.25rem;
+        font-weight: bold;
+        span{
+            vertical-align: text-bottom;
+            letter-spacing: 1.5px;
+        }
+
+        a{
+            font-size:1.5rem;
+            color:#6f1115;
+            padding:0 0.5rem;
+        }
+        a:hover{
+            color:#ffd200;
+        }
+    }
+
+    .page-reserva{
+        .veiculos-top, .reserva-top{
+            background-color:#6f1115;
+            color:#FFF;
+            font-weight: bold;
+            font-size:1.125rem;
+            padding: 0.5rem 1rem;
+            margin-bottom:0.5rem;
+        }
+        .veiculos-hide{
+            display:none;
+        }
+        .veiculos-grupo{
+            background-color:#eaebed;
+            padding: 0.5rem 1rem;
+            margin-bottom:0.5rem;
+        }
+        .veiculos-grupo:hover{
+            cursor:pointer;
+        }
+        .btn-veiculo{
+            background-color:#ffd200;
+            color:#7d1a1e;
+            border:1px solid #ffd200;
+            display: inline-block;
+            padding:2.5px 10px;
+        }
+        .btn-veiculo:hover{
+            background-color:#7d1a1e;
+            color:#ffd200;
+        }
+    }
+
+    .page-contato{
+        .tel-big{
+            font-size:1.25rem;
+            color:#7d1a1e;
+        }
+    }
+
+    .page-sobre{
+        .desc{
+            line-height: 1.75rem;
+        }
     }
 }

@@ -4,6 +4,10 @@ body{
   font-size:14px;
 }
 
+a:hover{
+  text-decoration: none;
+}
+
 
 h1,h2,h3,h4,h5{
   font-family: Arial, Helvetica, sans-serif;
@@ -34,5 +38,5 @@ h1,h2,h3,h4,h5{
 }
 
 .bigger{
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }

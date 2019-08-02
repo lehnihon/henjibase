@@ -1,12 +1,23 @@
 <?php
-get_header(); ?>
+get_header(); 
+?>
 <div id="page">
-  <div class="banner">
-    <img class="img-fluid" src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/banner.jpg"; ?>" />
-  </div>
-  <div class="page-espaco">
+  <div id="titulo-topo" class="titulo-topo p-md-4 p-1">
     <div class="container">
-      <div class="row pt-3">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Nossa Frota</h1>
+          <h5>Alugue um carro com na Henji e aproveite ao máximo seu passeio!</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <?php get_template_part( 'content', 'breadcrumb' ); ?>
+
+  <div>
+    <div class="container">
+      <div class="row">
         <div class="col-12 text-center">
           <h3>Conheça nossa Frota</h3>
           <p>
@@ -40,6 +51,7 @@ get_header(); ?>
           <a href="#" class="btn-selecionar">Selecionar</a>
         </div>
       </div>
+      <?php get_template_part( 'content', 'redes' ); ?>
     </div>
   </div>
 </div>
