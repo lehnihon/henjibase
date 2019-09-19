@@ -1,4 +1,16 @@
 <?php
+$client = new SoapClient('http://www.henjiweb.com.br/Webservice/wsReserva.asmx?WSDL');
+$params = array(
+  "pUsuario" => "reserva",
+  "pSenha" => "r3s3rva&2019"
+);
+  
+$response = $client->__soapCall("GetGrupoVeiculo", array($params));
+
+$xml = simplexml_load_string($response->GetGrupoVeiculoResult->any);
+
+$grupos = $xml->NewDataSet->Table1;
+
 get_header(); 
 ?>
 <div id="page">
@@ -18,38 +30,21 @@ get_header();
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mb-3">
           <h3>Conheça nossa Frota</h3>
           <p>
             As melhores opçoes pra você reservar e aproveitar
           </p>
         </div>
       </div>
-      <div class="row pb-3">
-        <div class="col-md-3 text-center mb-3">
-          <img src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/carro1.jpg"; ?>" />
-          <h3>Grupo A</h3>
-          <p class="bigger">Fiat Mob ou similar</p>
-          <a href="#" class="btn-selecionar">Selecionar</a>
-        </div>
-        <div class="col-md-3 text-center mb-3">
-          <img src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/carro2.jpg"; ?>" />
-          <h3>Grupo B</h3>
-          <p class="bigger">HB20 ou smilar</p>
-          <a href="#" class="btn-selecionar">Selecionar</a>
-        </div>
-        <div class="col-md-3 text-center mb-3">
-          <img src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/carro3.jpg"; ?>" />
-          <h3>Grupo C</h3>
-          <p class="bigger">Fiat Strada ou similar</p>
-          <a href="#" class="btn-selecionar">Selecionar</a>
-        </div>
-        <div class="col-md-3 text-center mb-3">
-          <img src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/carro4.jpg"; ?>" />
-          <h3>Grupo D</h3>
-          <p class="bigger">Jeep Renegade ou Similar</p>
-          <a href="#" class="btn-selecionar">Selecionar</a>
-        </div>
+      <div class="row pb-3 justify-content-center">
+        <?php foreach($grupos as $grupo){ ?>
+          <div class="col-md-3 text-center mb-3">
+            <img src="<?php echo $grupo->UrlImagem ?>" />
+            <h3>Grupo <?php echo $grupo->Descricao ?></h3>
+            <p class="bigger"><?php echo $grupo->Complemento ?></p>
+          </div>
+        <?php }  ?>
       </div>
       <?php get_template_part( 'content', 'redes' ); ?>
     </div>

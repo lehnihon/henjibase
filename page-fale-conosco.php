@@ -51,15 +51,15 @@ get_header();
           </div>
           <p class='mt-3'>
               Central de Reservas 24h<br>
-              <span class='tel-big'>11 4330-6153</span>
+              <span class='tel-big'>11 4332-8787</span>
           </p>
           <p>
               Central de Reservas 24h (sinistros, furtos, roubo)<br>
-              <span class='tel-big'>11 4330-6153</span>
+              <span class='tel-big'>11 4332-8787</span>
           </p>
           <p>
                Serviço de Atendimento ao Cliente<br>
-              <span class='tel-big'>11 4330-6153</span>
+              <span class='tel-big'>11 4332-8787</span>
           </p>
         </div>
       </div>

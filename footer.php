@@ -37,7 +37,7 @@
           <div class="col-sm-4">
             <h4>Atendimento</h4>
             <ul>
-              <li>11 4330-6153</li>
+              <li>11 4332-8787</li>
               <li>11 94330-6153</li>
             </ul> 
           </div>
