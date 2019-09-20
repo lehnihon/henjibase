@@ -102,13 +102,15 @@ if(isset($_POST['reservar'])){
   $xml = simplexml_load_string($response->GetInformacoesTarifaResult->any);
 
   $tarifasf = $xml->NewDataSet->Tarifas;
+
   $tarifas = null;
+
   if(empty($idtarifa)){
     $tarifas = $tarifasf;
   }else{
     foreach($tarifasf as $i => $t){
       if($idtarifa == $t->Id_Tarifa){
-        $tarifas = $tarifasf[$i];
+        $tarifas = $t;
       }
     }
   }
@@ -253,7 +255,7 @@ function geraHtmlProtecoes($protecoes){
         
         $html_protecao .= "
         <div class='row mb-2'>
-          <div class='col-9'>
+          <div class='col-8'>
             <div class='form-check'>
             <input class='form-check-input opcheckb' type='checkbox' data-descricao='{$val->Descricao}' data-valor='{$val->VlrProtecaoDiaria}' name='protecao' id='op{$val->Id_Protecao}' value='{$val->Id_Protecao}'>
             <label data-container='body' data-html='true' data-toggle='popover' data-trigger='hover' data-placement='top' data-content='$popconteudo' class='form-check-label' for='op{$val->Id_Protecao}'>
@@ -261,7 +263,7 @@ function geraHtmlProtecoes($protecoes){
             </label>
             </div>
           </div>
-          <div class='col-3'>R$".str_replace(".",",",$val->VlrProtecaoDiaria)."/dia</div>
+          <div class='col-4'>R$".str_replace(".",",",$val->VlrProtecaoDiaria)."/dia</div>
         </div>
         ";
       }
@@ -348,7 +350,7 @@ function geraHtmlTotal($tarifa){
         Tarifa Total:
       </div>
       <div class='col-5'>
-        R$".str_replace(".",",",$tarifa->VlrDiaria*$tarifa->QtdeDias)."
+        R$".number_format($tarifa->VlrDiaria*$tarifa->QtdeDias,2,',','')."
       </div>
     </div>
     <hr>
@@ -359,6 +361,9 @@ function geraHtmlTotal($tarifa){
     </div>
     <div class='row mb-1'>
       <div class='col-12 adicionais-lista'>
+      </div>
+      <div class='col-12'>
+        <div class='row'><div class='col-7'><strong>Total:</strong></div><div class='col-5'>R$<span class='adicionais-total'>0</span>/dia</div></div>
       </div>
     </div>
     <hr>
@@ -375,7 +380,12 @@ function geraHtmlTotal($tarifa){
           R$".str_replace(".",",",$tarifa->VlrProtecaoDiaria)."/dia
         </div>
     </div>
-    <div class='protecoes-lista mb-1'>
+    <div class='row mb-1'>
+      <div class='col-12 protecoes-lista'>
+      </div>
+      <div class='col-12'>
+        <div class='row'><div class='col-7'><strong>Total:</strong></div><div class='col-5'>R$<span data-valor='".$tarifa->VlrProtecaoDiaria."' class='protecao-total'>".$tarifa->VlrProtecaoDiaria."</span>/dia</div></div>
+      </div>
     </div>
     <hr>
     <div class='row mb-1'>
@@ -406,7 +416,7 @@ function geraHtmlTotal($tarifa){
     <div class='total-estimado py-2 px-2'>
       <div class='row'>
         <div class='col-7'>
-          Dias
+          DIAS
         </div>
         <div class='col-5'>
           ".$tarifa->QtdeDias." dias
@@ -414,18 +424,18 @@ function geraHtmlTotal($tarifa){
       </div>
       <div class='row'>
         <div class='col-7'>
-          Diária
+          DIÁRIA
         </div>
         <div class='col-5 totaldiaria' data-dias='{$tarifa->QtdeDias}' data-valor='".($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria)."'>
-          R$".str_replace(".",",",$tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria)."
+          R$".number_format($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria,2,',','')."
         </div>
       </div>
       <div class='row'>
         <div class='col-7'>
-          <strong>Total</strong>
+          <strong>TOTAL</strong>
         </div>
         <div class='col-5 total'>
-          R$".str_replace(".",",",($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria)*$tarifa->QtdeDias)."
+          R$".number_format((($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria)*$tarifa->QtdeDias),2,',','')."
         </div>
       </div>
     </div>
