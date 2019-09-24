@@ -22,10 +22,10 @@ get_header('central');
       <div class="row">
         <div class="col-12">
           <div class="reserva-concluida px-2 py-2">
-            <h4>Reserva Concluída!</h4>
+            <h4>Pré-Reserva Concluída</h4>
             <p><strong>Número:</strong><?php echo $_GET['id'] ?></p>
             <p><strong>Status:</strong><?php echo $_GET['status'] ?></p>
-            <p><strong>Veículo:</strong><?php echo $_GET['veiculo'] ?></p>
+            <p>Obrigado por nos consultar. Em breve entraremos em contato, aguarde!</p>
           </div>
         </div>
       </div>
