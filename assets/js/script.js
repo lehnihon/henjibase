@@ -1,7 +1,8 @@
 ( function( $ ) {
     $('.date').mask('00/00/0000');
     $('.time').mask('00:00');
-    $('.cpf').mask('000.000.000-00', {reverse: true});
+    $('.form3').mask('000.000.000-00');
+    $('.form3').attr('maxlength','14');
     var options = {
         onKeyPress: function (cpf, ev, el, op) {
             var masks = ['000.000.000-000', '00.000.000/0000-00'];
@@ -19,8 +20,41 @@
     }
     $('#form-dev').on('click',function(){
         $('.local-dev').toggle();
+        if(!$('#form-dev').is(":checked")){
+            $('.local-dev-msg').html("");
+            $('.local-dev-msg-border').css("border","0px");
+            return;
+        }
     });
     $('.buscar-reserva').on('click',function(){
+        var msgerror = "";
+        if($('#form-dev').is(":checked")){
+            if($('.lcretorno').val() == '0'){
+                msgerror += "Selecione o local ou desmarque<br>"; 
+            }
+        }
+        var dtretirada = $('.dtretirada').val();
+        var dtretirada_parts = dtretirada.split("/");
+        var hrretirada = $('.hrretirada').val();
+
+        data = Date.parse(dtretirada_parts[2]+"-"+dtretirada_parts[1]+"-"+dtretirada_parts[0]+" "+hrretirada);
+
+        if(Number.isNaN(data)){
+            msgerror += "Data de retirada inválida<br>"; 
+        }
+        var dtretorno = $('.dtretorno').val();
+        var dtretorno_parts = dtretorno.split("/");
+        var hrretorno  = $('.hrretorno').val();
+
+        data = Date.parse(dtretorno_parts[2]+"-"+dtretorno_parts[1]+"-"+dtretorno_parts[0]+" "+hrretorno);
+        if(Number.isNaN(data)){
+            msgerror += "Data de retorno inválida<br>"; 
+        }
+        if(msgerror != ""){
+            $('.msg-error-js').show();
+            $('.msg-error-js').html(msgerror)
+            return;
+        }
         $('#header').submit();
     });
     $('.veiculos-grupo').on('click',function(){
@@ -59,11 +93,12 @@
         protecaototal = parseFloat($('.protecao-total').data('valor'));
         adicionais_input = '';
         protecoes_input = '';
+        dias = parseFloat($('.totaldiaria').data('dias'));
 
         for(i = 0;i < opcoes.length ;i++){
             if(opcoes.eq(i).is(':checked')){
                 valortotal += parseFloat(opcoes.eq(i).data('valor'));
-                adicionaistotal += parseFloat(opcoes.eq(i).data('valor'));
+                adicionaistotal += parseFloat(opcoes.eq(i).data('valor'))*dias;
                 adicionais_input += opcoes.eq(i).val()+',';
                 adicionais_lista += "<div class='row'><div class='col-7'>"+opcoes.eq(i).data('descricao')+"</div><div class='col-5'>R$"+opcoes.eq(i).data('valor').replace('.',',')+"/dia</div></div>";
             }
@@ -72,13 +107,12 @@
         for(i = 0;i < opcoesb.length ;i++){
             if(opcoesb.eq(i).is(':checked')){
                 valortotal += parseFloat(opcoesb.eq(i).data('valor'));
-                protecaototal +=  parseFloat(opcoesb.eq(i).data('valor'));
+                protecaototal +=  parseFloat(opcoesb.eq(i).data('valor'))*dias;
                 protecoes_input += opcoesb.eq(i).val()+',';
                 protecoes_lista += "<div class='row'><div class='col-7'>"+opcoesb.eq(i).data('descricao')+"</div><div class='col-5'>R$"+opcoesb.eq(i).data('valor').replace('.',',')+"/dia</div></div>";
             }
         }
         totaldiaria = parseFloat($('.totaldiaria').data('valor'));
-        dias = parseFloat($('.totaldiaria').data('dias'));
         valortotal = parseFloat(valortotal);
         $('.adicionais-total').html(adicionaistotal.toFixed(2).replace('.',','));
         $('.protecao-total').html(protecaototal.toFixed(2).replace('.',','));
@@ -107,6 +141,47 @@
             $('.nbrasileiro').show('slow');
         }
     });
+    $('.form1').on('change',function(){
+        if($(this).val() == 'F'){
+            $('.form3').mask('000.000.000-00');
+            $('.form3').attr('maxlength','14');
+        }else{
+            $('.form3').mask('00.000.000/0000-00');
+            $('.form3').attr('maxlength','18');
+        }
+    })
+    $('.reservar').on('click',function(){
+        var error = false;
+        $('.alerta-msg').html('');
+        if($('.form2').val() == ''){
+            $('.alerta-msg').append('Nome cliente é obrigatório<br>');
+            error = true;
+        }
+        if($('.form3').val() == ''){
+            $('.alerta-msg').append('CNPJ/CPF cliente é obrigatório<br>');
+            error = true;
+        }
+        if($('.form4').val() == ''){
+            $('.alerta-msg').append('E-mail cliente é obrigatório<br>');
+            error = true;
+        }
+        if($('.form5').val() == ''){
+            $('.alerta-msg').append('Telefone cliente é obrigatório<br>');
+            error = true;
+        }
+
+        if($('.form8').val() == ''){
+            $('.alerta-msg').append('CNH cliente é obrigatório<br>');
+            error = true;
+        }
+        if(!error){
+            $('.reserv').val("1");
+            $('#form-values').submit();
+        }else{
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            $('.alerta-erro').show();
+        }
+    });
     $('.dtretirada-icon').on('click',function(){
         $('.dtretirada').focus();
     });
@@ -124,5 +199,18 @@
     });
     $('.lcretorno-icon').on('click',function(){
         $('.lcretorno').focus();
+    });
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        autoplay:true,
+        autoplayTimeout:5000,
+        autoplayHoverPause:true,
+        margin:10,
+        nav:false,
+        responsive:{
+            0:{
+                items:1
+            }
+        }
     });
 } )( jQuery );

@@ -21,6 +21,9 @@
       a:hover{
         color:#ffd200;
       }
+      a.active{
+        color:#ffd200;
+      }
   }
   .menu-alugue{
     background-color:#6f1115;
@@ -48,6 +51,10 @@
     }
     .local-dev{
       display:none;
+    }
+    .local-dev-msg{
+      color:#ffd200;
+      margin-top:0.5rem;
     }
   }
 }

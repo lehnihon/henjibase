@@ -26,6 +26,10 @@ $lojas = $xml->NewDataSet->Lojas;
 </head>
 
 <body>
+<?php
+$the_page = sanitize_post( $GLOBALS['wp_the_query']->get_queried_object() );
+$pagename = $the_page->post_name;
+?>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0"></script>
 <form id="header" action="<?php echo home_url( '/central-de-reserva' ); ?>" method="POST">
@@ -51,19 +55,19 @@ $lojas = $xml->NewDataSet->Lojas;
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="ml-auto navbar-nav">
               <li class="nav-item text-center">
-                <a class="nav-link px-md-3" href="<?php echo home_url( '/' ); ?>">Início</a>
+                <a class="nav-link px-md-3 <?php echo (empty($pagename))?'active':'' ?>" href="<?php echo home_url( '/' ); ?>">Início</a>
               </li>
               <li class="nav-item text-center">
-                <a class="nav-link px-md-3" href="<?php echo home_url( '/a-empresa' ); ?>">Empresa</a>
+                <a class="nav-link px-md-3 <?php echo ($pagename == 'a-empresa')?'active':'' ?>" href="<?php echo home_url( '/a-empresa' ); ?>">Empresa</a>
               </li>
               <li class="nav-item text-center">
-                <a class="nav-link px-md-3" href="<?php echo home_url( '/frota' ); ?>">Frota</a>
+                <a class="nav-link px-md-3 <?php echo ($pagename == 'frota')?'active':'' ?>" href="<?php echo home_url( '/frota' ); ?>">Frota</a>
               </li>
               <li class="nav-item text-center">
-                <a class="nav-link px-md-3" href="#">Ofertas</a>
+                <a class="nav-link px-md-3 <?php echo ($pagename == 'ofertas')?'active':'' ?>" href="<?php echo home_url( '/ofertas' ); ?>">Ofertas</a>
               </li>
               <li class="nav-item text-center">
-                <a class="nav-link px-md-3" href="<?php echo home_url( '/fale-conosco' ); ?>">Fale Conosco</a>
+                <a class="nav-link px-md-3 <?php echo ($pagename == 'fale-conosco')?'active':'' ?>" href="<?php echo home_url( '/fale-conosco' ); ?>">Fale Conosco</a>
               </li>
               <li class="nav-item text-center">
                 <a class="nav-link px-md-3" href="http://henjiweb.com.br/Login/Login.aspx?ReturnUrl=%2fAdministracao%2fCentralReserva%2fDefault.aspx">Administração</a>
@@ -80,6 +84,10 @@ $lojas = $xml->NewDataSet->Lojas;
         <div class="col-md-12">
           <h3>Alugue um carro</h3>
         </div>
+        <div class="col-md-12">
+          <div class="alert alert-warning msg-error-js" style="display:none">
+          </div>
+        </div>
         <div class="col-md-4 mb-3 mb-md-0">
           <div class="row">
             <div class="col-12 mb-1">
@@ -95,7 +103,7 @@ $lojas = $xml->NewDataSet->Lojas;
             </div>
             <div class="col-5 mb-1">
               <div class="input-group">
-                <input type="text" name="hrretirada" value="<?php echo (!empty($_POST['hrretirada']))? $_POST['hrretirada'] : '10:00'; ?>" class="form-control time hrretirada">
+                <input type="text" name="hrretirada" value="<?php echo (!empty($_POST['hrretirada']))? $_POST['hrretirada'] : date('H:i'); ?>" class="form-control time hrretirada">
                 <div class="input-group-append hrretirada-icon">
                   <div class="input-group-text"><i class="far fa-clock"></i></div>
                 </div>
@@ -118,7 +126,7 @@ $lojas = $xml->NewDataSet->Lojas;
             </div>
             <div class="col-5 mb-1">
               <div class="input-group">
-                <input type="text" name="hrretorno" value="<?php echo (!empty($_POST['hrretorno']))? $_POST['hrretorno'] : '10:00'; ?>" class="form-control time hrretorno">
+                <input type="text" name="hrretorno" value="<?php echo (!empty($_POST['hrretorno']))? $_POST['hrretorno'] : date('H:i'); ?>" class="form-control time hrretorno">
                 <div class="input-group-append">
                   <div class="input-group-text hrretorno-icon"><i class="far fa-clock"></i></div>
                 </div>
@@ -126,7 +134,6 @@ $lojas = $xml->NewDataSet->Lojas;
             </div>
             <div class="col-12">
               <a href="<?php echo home_url( '' ); ?>" class="mr-3">Nova Reserva</a>
-              <a href="#">Alterar/Cancelar Reserva</a>
             </div>
           </div>
         </div>

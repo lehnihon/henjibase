@@ -17,7 +17,7 @@ $dtretorno_completa = DateTime::createFromFormat('d/m/Y', $dtretorno)->format('Y
 
 // CONSULTA DADOS DE RESERVA
 
-if(isset($_POST['reservar'])){
+if(!empty($_POST['reservar'])){
   //GRAVA DADOS DE RESERVA
   $nacionalidade = $_POST['nacionalidade'];
   $form1 = $_POST['form1'];
@@ -25,7 +25,6 @@ if(isset($_POST['reservar'])){
   $form3 = $_POST['form3'];
   $form4 = $_POST['form4'];
   $form5 = $_POST['form5'];
-  $form7 = $_POST['form7'];
   $form8 = $_POST['form8'];
   $form17 = $_POST['form17'];
   $form10 = $_POST['form10'];
@@ -42,7 +41,7 @@ if(isset($_POST['reservar'])){
     $form21 = $_POST['form21'];
     $form4 = $_POST['form22'];
     $form5 = $_POST['form23'];
-    $form7 = $_POST['form24'];
+    $form24 = $_POST['form24'];
     $form9 = $_POST['form25'];
   }
   $adicionais = $_POST['adicionais'];
@@ -63,16 +62,16 @@ if(isset($_POST['reservar'])){
     "pTelefoneLocatario" => $form5,
     "pNumeroCNHLocatario" => $form8,
     "pEstrangeiroLocatario" => $nacionalidade,
-    "pPaisOrigemLocatario" => $form7,
+    "pPaisOrigemLocatario" => $form24,
     "pNumeroPassaporteLocatario" => $form21,
-    "pNomeCondutor" => $form10,
-    "pDocumentoCondutor" => $form11,
-    "pEmailCondutor" => $form12,
-    "pTelefoneCondutor" => $form13,
-    "pNumeroCNHCondutor" => $form15,
-    "pEstrangeiroCondutor" => $form16,
-    "pPaisOrigemCondutor" => $form14,
-    "pNumeroPassaporteCondutor" => $form17,
+    "pNomeCondutor" => '',
+    "pDocumentoCondutor" => '',
+    "pEmailCondutor" => '',
+    "pTelefoneCondutor" => '',
+    "pNumeroCNHCondutor" => '',
+    "pEstrangeiroCondutor" => '',
+    "pPaisOrigemCondutor" => '',
+    "pNumeroPassaporteCondutor" => '',
     "pObservacao" => $form9,
     "pIdsProtecao" => $protecoes,
     "pIdsOpcionais" => $adicionais
@@ -98,7 +97,11 @@ if(isset($_POST['reservar'])){
   if(isset($_POST['idgrupo'])){
     $params["pIdGrupoVeiculo"] = $_POST['idgrupo'];
   }
+  try{
   $response = $client->__soapCall("GetInformacoesTarifa", array($params));
+  }catch(Throwable $e){
+    $msgerror = "Erro ao consultar o servidor - Valores inválidos";
+  }
   $xml = simplexml_load_string($response->GetInformacoesTarifaResult->any);
 
   $tarifasf = $xml->NewDataSet->Tarifas;
@@ -157,7 +160,7 @@ function geraHtmlGrupo($tarifas){
                         <th>Diária</th>
                         <th>Franquia</th>
                         <th>KM Adc.</th>
-                        <th>Proteção</th>
+                        <th class='presp'>Proteção</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -170,7 +173,7 @@ function geraHtmlGrupo($tarifas){
           <td>R$".str_replace('.',',',$val->VlrDiaria)."</td>
           <td>".$val->LimiteKm."</td>
           <td>R$".str_replace('.',',',$val->VlrKmExcedente)."</td>
-          <td>R$".str_replace('.',',',$val->VlrProtecaoDiaria)."</td>
+          <td class='presp'>R$".str_replace('.',',',$val->VlrProtecaoDiaria)."</td>
           <td><a class='btn-veiculo' data-grupo='{$val->Id_GrupoVeiculo}' data-tarifa='{$val->Id_Tarifa}' href='#'>Selecionar</a></td>
         </tr>
       ";
@@ -363,7 +366,7 @@ function geraHtmlTotal($tarifa){
       <div class='col-12 adicionais-lista'>
       </div>
       <div class='col-12'>
-        <div class='row'><div class='col-7'><strong>Total:</strong></div><div class='col-5'>R$<span class='adicionais-total'>0</span>/dia</div></div>
+        <div class='row'><div class='col-7'><strong>Total:</strong></div><div class='col-5'>R$<span class='adicionais-total'>0</span></div></div>
       </div>
     </div>
     <hr>
@@ -384,7 +387,7 @@ function geraHtmlTotal($tarifa){
       <div class='col-12 protecoes-lista'>
       </div>
       <div class='col-12'>
-        <div class='row'><div class='col-7'><strong>Total:</strong></div><div class='col-5'>R$<span data-valor='".$tarifa->VlrProtecaoDiaria."' class='protecao-total'>".$tarifa->VlrProtecaoDiaria."</span>/dia</div></div>
+        <div class='row'><div class='col-7'><strong>Total:</strong></div><div class='col-5'>R$<span data-valor='".$tarifa->VlrProtecaoDiaria*$tarifa->QtdeDias."' class='protecao-total'>".number_format($tarifa->VlrProtecaoDiaria*$tarifa->QtdeDias,2,",","")."</span></div></div>
       </div>
     </div>
     <hr>
@@ -424,7 +427,7 @@ function geraHtmlTotal($tarifa){
       </div>
       <div class='row'>
         <div class='col-7'>
-          DIÁRIA
+          TOTAL DIÁRIA
         </div>
         <div class='col-5 totaldiaria' data-dias='{$tarifa->QtdeDias}' data-valor='".($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria)."'>
           R$".number_format($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria,2,',','')."
@@ -432,7 +435,7 @@ function geraHtmlTotal($tarifa){
       </div>
       <div class='row'>
         <div class='col-7'>
-          <strong>TOTAL</strong>
+          <strong>TOTAL GERAL</strong>
         </div>
         <div class='col-5 total'>
           R$".number_format((($tarifa->VlrDiaria+$tarifa->VlrProtecaoDiaria)*$tarifa->QtdeDias),2,',','')."
@@ -450,6 +453,14 @@ function geraHtmlTotal($tarifa){
 
 function formFinal(){
 ?>
+  <input type="hidden" name="reservar" class="reserv">
+  <div class="row mb-4 alerta-erro" style="display:none">
+    <div class="col-12">
+      <div class="alert alert-warning alerta-msg" role="alert">
+        
+      </div>
+    </div>
+  </div>
   <div class="row mb-4">
     <div class="col-12">
       <div class="form-check form-check-inline">
@@ -468,80 +479,35 @@ function formFinal(){
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form1">Tipo Pessoa:</label>
-      <select name="form1" id="form1" class="form-control">
+      <select name="form1" id="form1" class="form-control form1">
         <option value="F">Física</option>
         <option value="J">Jurídica</option>
       </select> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form2">Nome:</label>
-      <input type="text" name="form2" id="form2" class="form-control"> 
+      <input type="text" name="form2" id="form2" class="form-control form2"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form3">CPF/CNPJ:</label>
-      <input type="text" name="form3" id="form3" class="form-control cpfOuCnpj"> 
+      <input type="text" name="form3" id="form3" class="form-control cpf form3"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form4">E-mail:</label>
-      <input type="email" name="form4" id="form4" class="form-control"> 
+      <input type="email" name="form4" id="form4" class="form-control form4"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form5">Telefone:</label>
-      <input type="text" name="form5" id="form5" class="form-control"> 
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form7">País</label>
-      <input type="text" name="form7" id="form7" class="form-control"> 
+      <input type="text" name="form5" id="form5" class="form-control form5"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form8">CNH</label>
-      <input type="text" name="form8" id="form8" class="form-control"> 
+      <input type="text" name="form8" id="form8" class="form-control form8"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form9">Obsevações</label>
       <textarea name="form9" id="form9" class="form-control"> 
       </textarea>
-    </div>
-    <div class="col-12 mb-2">
-      <h4>Dados Condutor</h4>
-    </div>
-    <div class="col-12 form-group mb-2">
-      <div class="form-check form-check-inline">
-        <input checked class="form-check-input" type="radio" name="form16" id="form16" value="N">
-        <label class="form-check-label" for="form16">Não Estrangeiro</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="form16" id="form16" value="S">
-        <label class="form-check-label" for="form16">Estrangeiro</label>
-      </div>
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form10">Nome:</label>
-      <input type="text" name="form10" id="form10" class="form-control"> 
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form11">CPF:</label>
-      <input type="text" name="form11" id="form11" class="form-control cpf"> 
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form17">Passporte:</label>
-      <input type="text" name="form17" id="form17" class="form-control"> 
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form12">E-mail:</label>
-      <input type="email" name="form12" id="form12" class="form-control"> 
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form13">Telefone:</label>
-      <input type="text" name="form13" id="form13" class="form-control"> 
-    </div>
-    <div class="col-12 form-group mb-2">
-      <label for="form14">País</label>
-      <input type="text" name="form14" id="form14" class="form-control"> 
-    </div>
-    <div class="col-12 form-group">
-      <label for="form15">CNH</label>
-      <input type="text" name="form15" id="form15" class="form-control"> 
     </div>
   </div>
   <div class="row nbrasileiro">
@@ -553,16 +519,16 @@ function formFinal(){
       <input type="text" name="form20" id="form20" class="form-control"> 
     </div>
     <div class="col-12 form-group mb-2">
-      <label for="form21">Passaporte:</label>
-      <input type="text" name="form21" id="form21" class="form-control"> 
-    </div>
-    <div class="col-12 form-group mb-2">
       <label for="form22">E-mail:</label>
       <input type="email" name="form22" id="form22" class="form-control"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form23">Telefone:</label>
       <input type="text" name="form23" id="form23" class="form-control"> 
+    </div>
+    <div class="col-12 form-group mb-2">
+      <label for="form21">Passaporte:</label>
+      <input type="text" name="form21" id="form21" class="form-control"> 
     </div>
     <div class="col-12 form-group mb-2">
       <label for="form24">País</label>
@@ -576,7 +542,7 @@ function formFinal(){
   </div>
   <div class="row mt-4">
     <div class='col-12'>
-      <input type="submit" name="reservar" class='btn-reserva' value='Solicitar Reserva'>
+      <input type="button" class='btn-reserva reservar' value='Solicitar Reserva'>
     </div>
   </div>
 <?php
@@ -631,9 +597,13 @@ get_header('central');
     <div class="container">
       <div class="row">
         <?php
-        if(isset($xml->NewDataSet->Erros_Avisos->mensagem)){
-          geraModalMsg($xml->NewDataSet->Erros_Avisos->mensagem[0]);
-        }elseif(isset($_POST['reservar'])){
+        if(isset($xml->NewDataSet->Erros_Avisos->mensagem) or !empty($msgerror)){
+          if(!empty($msgerror)){
+            geraModalMsg($msgerror);
+          }else{
+            geraModalMsg($xml->NewDataSet->Erros_Avisos->mensagem[0]);
+          }
+        }elseif(!empty($_POST['reservar'])){
         ?>
           <div class="col-12">
             <h2>Redirecionando</h2>

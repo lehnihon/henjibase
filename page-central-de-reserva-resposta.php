@@ -24,8 +24,9 @@ get_header('central');
           <div class="reserva-concluida px-2 py-2">
             <h4>Pré-Reserva Concluída</h4>
             <p><strong>Número:</strong><?php echo $_GET['id'] ?></p>
-            <p><strong>Status:</strong><?php echo $_GET['status'] ?></p>
+            <p><strong>Status:</strong>EM ANALISE</p>
             <p>Obrigado por nos consultar. Em breve entraremos em contato, aguarde!</p>
+            <a target="_blank" href="<?php echo home_url( '/imprimir?id='.$_GET['id'] ); ?>">Imprimir</a>
           </div>
         </div>
       </div>
