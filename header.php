@@ -47,7 +47,7 @@ $pagename = $the_page->post_name;
       <div class="col-md-12">
         <nav class="navbar navbar-expand-md navbar-dark">
           <a class="navbar-brand" href="<?php echo home_url( '/' ); ?>">
-            <img width="200" class="img-fluid e-claro logo" src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/logo.png"; ?>" />
+            <img width="200" class="img-fluid e-claro logo" src="<?php echo dirname( get_bloginfo('stylesheet_url'))."/assets/img/logo.jpg"; ?>" />
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

@@ -1,5 +1,5 @@
 #footer{
-    background: linear-gradient(90deg, #eaebed 50%, #7d1a1e 50%);
+    background: linear-gradient(90deg, #eaebed 50%, #01458e 50%);
     .left-back{
         background-color:#eaebed;
         color:#555555;
@@ -19,13 +19,13 @@
                     color:#555555;
                 }
                 a:hover{
-                    color:#7d1a1e;
+                    color:#8d211b;
                 }
             }
         }
     }
     .right-back{
-        background-color:#7d1a1e;
+        background-color:#01458e;
         color:#FFF;
         padding:4rem 0;
 
@@ -35,7 +35,7 @@
         }
 
         .news{
-            background-color:#7d1a1e;
+            background-color:#01458e;
             border:0;
             border-bottom:1px solid #FFF;
             padding:0.25rem 0.5rem;
@@ -46,21 +46,21 @@
         }
 
         .btn-news{
-            background-color:#ffd200;
-            color:#7d1a1e;
-            border:1px solid #ffd200;
+            background-color:#8d211b;
+            color:#FFF;
+            border:1px solid #8d211b;
             display: inline-block;
             padding:5px 20px;
         }
         .btn-news:hover{
-            background-color:#7d1a1e;
-            color:#ffd200;
+            background-color:#FFF;
+            color:#8d211b;
             cursor:pointer;
         }
     }
 }
 .footer-copy{
-    background-color:#6f1115;
+    background-color:#8d211b;
     color:#FFF;
     font-size:1.125rem;   
 }

@@ -28,16 +28,16 @@
           <div class="col-sm-4">
             <h4>Localização</h4>
             <p>
-              Av. Senador Vergueiro, 4343<br>
-              São Bernardo do Campo - SP<br>
-              CEP 09605-000
+              Avenida Monte Castelo, 60<br>
+              Bairro Proença - Campinas<br>
+              CEP: 13.026-240 
             </p>
           </div>
           <div class="col-sm-4">
             <h4>Atendimento</h4>
             <ul>
-              <li>11 4332-8787</li>
-              <li>11 94330-6153</li>
+              <li>(19) 3255-7770 </li>
+              <li>(19) 99772-1714</li>
             </ul> 
           </div>
         </div>
@@ -69,7 +69,7 @@
   <div class="container">
     <div class="row py-4">
       <div class="col-12 text-center">
-      © Henji - Todos os direitos reservados <?php echo date('Y'); ?>
+      © Lemans Locadora - Todos os direitos reservados <?php echo date('Y'); ?>
       </div>
     </div>
   </div>
